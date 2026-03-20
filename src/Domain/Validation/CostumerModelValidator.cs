@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace Domain.Validation
 {
@@ -96,6 +97,24 @@ namespace Domain.Validation
         {
             if (_propertyValue is decimal decimalValue && decimalValue < 0)
                 _validator.AddErrorMessage(message);
+            return this;
+        }
+
+        public PropertyRuleBuilder<T, TProperty> IsStrongPassword(string errorMessage)
+        {
+            var password = _propertyValue?.ToString();
+
+            if (string.IsNullOrEmpty(password))
+                return this;
+
+            var hasUpperCase = Regex.IsMatch(password, @"[A-Z]");
+            var hasLowerCase = Regex.IsMatch(password, @"[a-z]");
+            var hasNumber = Regex.IsMatch(password, @"[0-9]");
+            var hasSpecialChar = Regex.IsMatch(password, @"[!@#$%^&*()_+\-=\[\]{};':""\|,.<>\/?]");
+
+            if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar)
+                _validator.AddErrorMessage(errorMessage);
+
             return this;
         }
     }

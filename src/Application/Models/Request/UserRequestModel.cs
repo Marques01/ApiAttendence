@@ -6,6 +6,8 @@
 
         public string Password { get; init; } = string.Empty;
 
+        public string ConfirmPassword { get; init; } = string.Empty;
+
         public bool RememberMe { get; set; }
     }
 }

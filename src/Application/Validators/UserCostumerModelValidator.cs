@@ -15,7 +15,8 @@ namespace Application.Validators
             ValidateFor(u => u.Password)
                 .NotEmpty("Senha não pode ser vazia")
                 .MinLength(6, "Senha deve ter no mínimo 6 caracteres")
-                .MaxLength(32, "Senha deve ter no máximo 32 caracteres");
+                .MaxLength(32, "Senha deve ter no máximo 32 caracteres")
+                .IsStrongPassword("Senha deve conter letra maiúscula, minúscula, número e caractere especial");
             
             ValidateFor(u => u.Name)
                 .NotEmpty("Nome não pode ser vazio")

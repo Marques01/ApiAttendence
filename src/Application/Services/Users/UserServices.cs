@@ -41,6 +41,9 @@ namespace Application.Services.Users
                 if (userExists)
                     throw new ArgumentException("Este login já está associado a uma conta existente.");
 
+                if (userCostumerModel.Password != userCostumerModel.ConfirmPassword)
+                    throw new ArgumentException("As senhas não coincidem.");
+
                 string salt = _encryption.GenerateSalt();
                 string password = _encryption.GenerateHash(userCostumerModel.Password, salt);
 

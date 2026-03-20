@@ -6,6 +6,7 @@ using Application.Services.Users.Interfaces;
 using Domain.CostumerExceptions;
 using Domain.Enum;
 using Domain.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
@@ -107,6 +108,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
+        [Authorize]
         public async Task<ActionResult> CreateAsync([FromBody] UserCostumerModel userCostumerModel)
         {
             try
@@ -181,6 +183,7 @@ namespace API.Controllers
         }
 
         [HttpPost("refresh")]
+        [Authorize]
         public async Task<ActionResult> RefreshToken([FromBody] UserTokenRequestModel userTokenModel)
         {
             try
