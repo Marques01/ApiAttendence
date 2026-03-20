@@ -6,23 +6,28 @@ namespace Infrastructure.Context
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Student> Students { get; set; }
-
         public DbSet<RfidCard> RfidCards { get; set; }
-
         public DbSet<User> Users { get; set; }
-
         public DbSet<Roles> Roles { get; set; }
-
         public DbSet<UserRoles> UserRoles { get; set; }
-
-        public DbSet<RefreshToken> RefreshTokens { get; set; }        
-
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<RegisterLog> RegisterLogs { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Habilitation> Habilitations { get; set; }
+        public DbSet<TeacherHabilitation> TeacherHabilitations { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             Students = Set<Student>();
             RfidCards = Set<RfidCard>();
+            Users = Set<User>();
+            Roles = Set<Roles>();
+            UserRoles = Set<UserRoles>();
+            RefreshTokens = Set<RefreshToken>();
+            RegisterLogs = Set<RegisterLog>();
+            Teachers = Set<Teacher>();
+            Habilitations = Set<Habilitation>();
+            TeacherHabilitations = Set<TeacherHabilitation>();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

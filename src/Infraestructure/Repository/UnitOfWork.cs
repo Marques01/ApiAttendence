@@ -16,6 +16,9 @@ namespace Infrastructure.Repository
         public IRolesRepository RoleRepository { get; }
         public IRefreshTokenRepository RefreshTokenRepository { get; }
         public IRegisterLogRepository RegisterLogRepository { get; }
+        public ITeacherRepository TeacherRepository { get; }
+        public IHabilitationRepository HabilitationRepository { get; }
+        public ITeacherHabilitationRepository TeacherHabilitationRepository { get; }
 
         public UnitOfWork(
             ApplicationDbContext context,
@@ -26,7 +29,10 @@ namespace Infrastructure.Repository
             IUserRolesRepository userRoleRepository,
             IRolesRepository roleRepository,
             IRefreshTokenRepository refreshTokenRepository,
-            IRegisterLogRepository registerLogRepository)   
+            IRegisterLogRepository registerLogRepository,
+            ITeacherRepository teacherRepository,
+            IHabilitationRepository habilitationRepository,
+            ITeacherHabilitationRepository teacherHabilitationRepository)
 
         {
             _context = context;
@@ -38,6 +44,9 @@ namespace Infrastructure.Repository
             RoleRepository = roleRepository;
             RefreshTokenRepository = refreshTokenRepository;
             RegisterLogRepository = registerLogRepository;
+            TeacherRepository = teacherRepository;
+            HabilitationRepository = habilitationRepository;
+            TeacherHabilitationRepository = teacherHabilitationRepository;
         }
 
         public async Task CommitAsync()

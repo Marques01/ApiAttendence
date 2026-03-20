@@ -108,7 +108,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult> CreateAsync([FromBody] UserCostumerModel userCostumerModel)
         {
             try
@@ -148,7 +148,7 @@ namespace API.Controllers
             {
                 await _registersLogsServices.CreateAsync(
                     message: "Erro de validação ao cadastrar usuário",
-                    details: $"Usuário: {ExtractUserNameFromToken()} tentou cadastrar um usuário. Erros: {JsonUtils.Serialize(val.ErrorMessages)}",
+                    details: $"Usuário: ExtractUserNameFromToken() tentou cadastrar um usuário. Erros: {JsonUtils.Serialize(val.ErrorMessages)}",
                     origin: $@"{nameof(AccountController)}\CreateAsync",
                     exception: string.Join("; ", val.ErrorMessages),
                     stacktrace: val.StackTrace ?? string.Empty,

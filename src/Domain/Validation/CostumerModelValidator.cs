@@ -95,8 +95,23 @@ namespace Domain.Validation
 
         public PropertyRuleBuilder<T, TProperty> NotNegative(string message)
         {
+            if (_propertyValue is int intValue && intValue < 0)
+                _validator.AddErrorMessage(message);
+
             if (_propertyValue is decimal decimalValue && decimalValue < 0)
                 _validator.AddErrorMessage(message);
+
+            return this;
+        }
+
+        public PropertyRuleBuilder<T, TProperty> MustBeGreaterThanZero(string message)
+        {
+            if (_propertyValue is int intValue && intValue <= 0)
+                _validator.AddErrorMessage(message);
+
+            if (_propertyValue is decimal decimalValue && decimalValue <= 0)
+                _validator.AddErrorMessage(message);
+
             return this;
         }
 
@@ -113,6 +128,21 @@ namespace Domain.Validation
             var hasSpecialChar = Regex.IsMatch(password, @"[!@#$%^&*()_+\-=\[\]{};':""\|,.<>\/?]");
 
             if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar)
+                _validator.AddErrorMessage(errorMessage);
+
+            return this;
+        }
+
+        public PropertyRuleBuilder<T, TProperty> IsValidEmail(string errorMessage)
+        {
+            var email = _propertyValue?.ToString();
+
+            if (string.IsNullOrEmpty(email))
+                return this;
+
+            var emailPattern = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
+
+            if (!Regex.IsMatch(email, emailPattern))
                 _validator.AddErrorMessage(errorMessage);
 
             return this;

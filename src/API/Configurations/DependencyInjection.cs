@@ -19,6 +19,12 @@ namespace API.Configurations
         {
             services.AddScoped<IStudentServices, StudentServices>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ITeacherServices, TeacherServices>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IHabilitationServices, HabilitationServices>();
+            services.AddScoped<IHabilitationRepository, HabilitationRepository>();
+            services.AddScoped<ITeacherHabilitationServices, TeacherHabilitationServices>();
+            services.AddScoped<ITeacherHabilitationRepository, TeacherHabilitationRepository>();
             services.AddScoped<IRfidCardRepository, RfidCardRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();

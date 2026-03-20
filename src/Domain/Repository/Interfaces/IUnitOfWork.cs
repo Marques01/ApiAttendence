@@ -9,6 +9,9 @@
         public IRolesRepository RoleRepository { get; }
         public IRefreshTokenRepository RefreshTokenRepository { get; }
         public IRegisterLogRepository RegisterLogRepository { get; }
+        public ITeacherRepository TeacherRepository { get; }
+        public IHabilitationRepository HabilitationRepository { get; }
+        public ITeacherHabilitationRepository TeacherHabilitationRepository { get; }
         Task CommitAsync();
     }
 }

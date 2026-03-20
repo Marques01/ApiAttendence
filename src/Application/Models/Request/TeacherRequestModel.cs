@@ -1,20 +1,13 @@
-﻿using Domain.Extensions;
+using Domain.Extensions;
 
 namespace Application.Models.Request
 {
-    public class StudentRequestModel
+    public class TeacherRequestModel
     {
-        private string
-            _name = string.Empty;
-
-        private string
-            _registration = string.Empty;
-
-        private bool
-            _enabled = false;
-
-        private int
-            _rfidCardId = 0;
+        private string _name = string.Empty;
+        private string _registration = string.Empty;
+        private string _email = string.Empty;
+        private bool _enabled = false;
 
         public string Name
         {
@@ -36,16 +29,20 @@ namespace Application.Models.Request
             }
         }
 
+        public string Email
+        {
+            get => _email;
+            init
+            {
+                string cleanInput = value.CleanInput().ToLower().Trim();
+                _email = cleanInput;
+            }
+        }
+
         public bool Enabled
         {
             get => _enabled;
             init => _enabled = value;
-        }
-
-        public int RfidCardId
-        {
-            get => _rfidCardId;
-            init => _rfidCardId = value;
         }
     }
 }
