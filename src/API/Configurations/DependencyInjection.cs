@@ -1,7 +1,15 @@
 ﻿using Application.Services;
 using Application.Services.Interfaces;
+using Application.Services.RegistersLogs;
+using Application.Services.RegistersLogs.Interfaces;
+using Application.Services.Tokens;
+using Application.Services.Tokens.Interfaces;
+using Application.Services.Users;
+using Application.Services.Users.Interfaces;
 using Domain.Repository.Interfaces;
-using Infraestructure.Repository;
+using Domain.Security.Interfaces;
+using Infrastructure.Repository;
+using Infrastructure.Security;
 
 namespace API.Configurations
 {
@@ -11,6 +19,16 @@ namespace API.Configurations
         {
             services.AddScoped<IStudentServices, StudentServices>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IRfidCardRepository, RfidCardRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+            services.AddScoped<IRolesRepository, RolesRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IRegisterLogRepository, RegisterLogRepository>();
+            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<ITokenServices, TokenServices>();
+            services.AddScoped<IRegistersLogsServices, RegistersLogsServices>();
+            services.AddScoped<IEncryption, Encryption>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }

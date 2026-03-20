@@ -17,5 +17,8 @@
         public DateTime UpdatedAt { get; set; }
 
         public DateTime DisabledAt { get; set; }
+
+        // Navegação
+        public virtual RfidCard? RfidCard { get; set; }
     }
 }

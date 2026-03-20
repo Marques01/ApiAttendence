@@ -2,7 +2,7 @@
 using Domain.Extensions;
 using Application.Models.Request;
 
-namespace Application.Factories
+namespace Application.Models.Factories
 {
     public static class StudentFactory
     {

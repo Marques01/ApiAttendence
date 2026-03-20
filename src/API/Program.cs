@@ -1,5 +1,5 @@
 using API.Configurations;
-using Infraestructure.Context;
+using Infrastructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

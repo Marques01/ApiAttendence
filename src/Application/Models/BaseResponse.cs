@@ -2,7 +2,7 @@
 
 namespace Application.Models
 {
-    public class BaseReponse
+    public class BaseResponse
     {
         public bool IsSuccess { get; set; }
 

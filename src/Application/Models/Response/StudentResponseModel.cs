@@ -1,6 +1,6 @@
 ﻿namespace Application.Models.Response
 {
-    public class StudentResponseModel : BaseReponse
+    public class StudentResponseModel : BaseResponse
     {
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infraestructure.Mapping
+namespace Infrastructure.Mapping
 {
     public class StudentMapping : IEntityTypeConfiguration<Student>
     {
@@ -13,6 +13,11 @@ namespace Infraestructure.Mapping
 
             builder.Property(s => s.Name).HasColumnType("varchar(100)");
             builder.Property(s => s.Registration).HasColumnType("varchar(20)");
+
+            // Relacionamento: Um RfidCard para muitos Students
+            builder.HasOne(s => s.RfidCard)
+                .WithMany(r => r.Students)
+                .HasForeignKey(s => s.RfidCardId);
         }
     }
 }

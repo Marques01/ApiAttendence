@@ -1,4 +1,4 @@
-﻿using Application.Factories;
+﻿using Application.Models.Factories;
 using Application.Models.Request;
 using Application.Models.Response;
 using Application.Services.Interfaces;
@@ -23,6 +23,11 @@ namespace Application.Services
             try
             {
                 ValidateModel(requestModel);
+
+                var student = await GetStudentByRegistrationAsync(requestModel.Registration);
+
+                if (student.StudentId > 0)
+                    throw new ArgumentException("Ooops... Já existe um estudante cadastrado com essa matrícula");
 
                 Student studentModel = StudentFactory.CreateStudent(requestModel);
 
@@ -49,6 +54,11 @@ namespace Application.Services
             {
                 throw;
             }
+        }
+
+        private async Task<Student> GetStudentByRegistrationAsync(string registration)
+        {
+            return await _uof.StudentRepository.GetStudentByRegistrationAsync(false, registration);
         }
 
         private void ValidateModel(StudentRequestModel model)

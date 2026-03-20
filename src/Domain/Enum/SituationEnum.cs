@@ -1,0 +1,42 @@
+﻿namespace Domain.Enum
+{
+    public enum SituationEnum
+    {
+        None = 0,
+        Active = 1,
+        Inactive = 2,
+        Pending = 3,
+        Suspended = 4,
+        Terminated = 5,
+        UnderReview = 6,
+        Archived = 7,
+        Deleted = 8,
+        Approved = 9,
+        Rejected = 10,
+        Processing = 11,
+        Completed = 12,
+        Failed = 13,
+        Cancelled = 14,
+        OnHold = 15,
+        Resolved = 16,
+        InProgress = 17,
+        WaitingForApproval = 18,
+        WaitingForPayment = 19,
+        WaitingForShipment = 20,
+        Shipped = 21,
+        Delivered = 22,
+        Returned = 23,
+        Refunded = 24,
+        PartiallyRefunded = 25,
+        PartiallyShipped = 26,
+        Backordered = 27,
+        PreOrder = 28,
+        OutOfStock = 29,
+        InStock = 30,
+        Error = 31,
+        Warning = 32,
+        Information = 33,
+        Success = 34,
+        Started = 35
+    }
+}

@@ -15,5 +15,8 @@
         public DateTime UpdatedAt { get; set; }
 
         public DateTime DisabledAt { get; set; }
+
+        // Navegação
+        public virtual ICollection<Student> Students { get; set; } = new List<Student>();
     }
 }

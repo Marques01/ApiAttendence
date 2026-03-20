@@ -1,8 +1,8 @@
 ﻿using Domain.Repository.Interfaces;
-using Infraestructure.Context;
+using Infrastructure.Context;
 using Microsoft.Extensions.Logging;
 
-namespace Infraestructure.Repository
+namespace Infrastructure.Repository
 {
     public class UnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
     {
@@ -10,15 +10,34 @@ namespace Infraestructure.Repository
         private readonly ILogger<UnitOfWork> _logger;
 
         public IStudentRepository StudentRepository { get; }
+        public IRfidCardRepository RfidCardRepository { get; }
+        public IUserRepository UserRepository { get; }
+        public IUserRolesRepository UserRoleRepository { get; }
+        public IRolesRepository RoleRepository { get; }
+        public IRefreshTokenRepository RefreshTokenRepository { get; }
+        public IRegisterLogRepository RegisterLogRepository { get; }
 
         public UnitOfWork(
             ApplicationDbContext context,
             ILogger<UnitOfWork> logger,
-            IStudentRepository studentRepository)
+            IStudentRepository studentRepository,
+            IRfidCardRepository rfidCardRepository,
+            IUserRepository userRepository,
+            IUserRolesRepository userRoleRepository,
+            IRolesRepository roleRepository,
+            IRefreshTokenRepository refreshTokenRepository,
+            IRegisterLogRepository registerLogRepository)   
+
         {
             _context = context;
             _logger = logger;
             StudentRepository = studentRepository;
+            RfidCardRepository = rfidCardRepository;
+            UserRepository = userRepository;
+            UserRoleRepository = userRoleRepository;
+            RoleRepository = roleRepository;
+            RefreshTokenRepository = refreshTokenRepository;
+            RegisterLogRepository = registerLogRepository;
         }
 
         public async Task CommitAsync()
