@@ -68,12 +68,7 @@ namespace Application.Services
         {
             try
             {
-                var teacherHabilitation = await GetTeacherHabilitationByIdAsync(teacherHabilitationId);
-
-                if (teacherHabilitation.TeacherHabilitationId == 0)
-                    throw new ArgumentException("Vínculo de habilidade não encontrado");
-
-                await _uof.TeacherHabilitationRepository.DeleteAsync(teacherHabilitation);
+                await _uof.TeacherHabilitationRepository.DeleteAsync(teacherHabilitationId);
                 await _uof.CommitAsync();
 
                 return new TeacherHabilitationResponseModel()
@@ -124,7 +119,7 @@ namespace Application.Services
 
         private async Task<Teacher> GetTeacherAsync(int teacherId)
         {
-            return await _uof.TeacherRepository.GetTeacherByRegistrationAsync(false, teacherId.ToString());
+            return await _uof.TeacherRepository.GetTeacherByIdAsync(false, teacherId);
         }
 
         private async Task<Habilitation> GetHabilitationAsync(int habilitationId)
@@ -135,11 +130,6 @@ namespace Application.Services
         private async Task<TeacherHabilitation> GetTeacherHabilitationAsync(int teacherId, int habilitationId)
         {
             return await _uof.TeacherHabilitationRepository.GetByTeacherAndHabilitationAsync(false, teacherId, habilitationId);
-        }
-
-        private async Task<TeacherHabilitation> GetTeacherHabilitationByIdAsync(int teacherHabilitationId)
-        {
-            return await _uof.TeacherHabilitationRepository.GetByIdAsync(false, teacherHabilitationId);
         }
 
         private void ValidateModel(TeacherHabilitationRequestModel model)

@@ -40,7 +40,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Token")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(max)");
 
                     b.HasKey("Id");
@@ -60,30 +60,30 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Details")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("Exception")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("Inner")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("Message")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("Origin")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(max)");
 
                     b.Property<int>("Situation")
                         .HasColumnType("int");
 
                     b.Property<string>("StackTrace")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(max)");
 
                     b.HasKey("Id");
@@ -100,7 +100,7 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RfidCardId"));
 
                     b.Property<string>("Code")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -130,7 +130,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("RoleId");
@@ -156,11 +156,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("Registration")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(20)");
 
                     b.Property<int>("RfidCardId")
@@ -199,19 +199,19 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2(0)");
 
                     b.Property<string>("Login")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(225)");
 
                     b.Property<string>("Salt")
-                        .IsRequired()
+                        
                         .HasColumnType("varchar(225)");
 
                     b.Property<DateTime>("UpdateAt")
@@ -250,7 +250,7 @@ namespace Infrastructure.Migrations
                         .WithMany("Students")
                         .HasForeignKey("RfidCardId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        ;
 
                     b.Navigation("RfidCard");
                 });
@@ -261,7 +261,7 @@ namespace Infrastructure.Migrations
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        ;
 
                     b.Navigation("User");
                 });

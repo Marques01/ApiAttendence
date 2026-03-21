@@ -19,6 +19,11 @@ namespace Infrastructure.Repository
         public ITeacherRepository TeacherRepository { get; }
         public IHabilitationRepository HabilitationRepository { get; }
         public ITeacherHabilitationRepository TeacherHabilitationRepository { get; }
+        public IClassesRepository ClassesRepository { get; }
+        public IClassroomRepository ClassroomRepository { get; }
+        public IHolidayRepository HolidayRepository { get; }
+        public IScheduleRepository ScheduleRepository { get; }
+        public IAttendanceRepository AttendanceRepository { get; }
 
         public UnitOfWork(
             ApplicationDbContext context,
@@ -32,8 +37,12 @@ namespace Infrastructure.Repository
             IRegisterLogRepository registerLogRepository,
             ITeacherRepository teacherRepository,
             IHabilitationRepository habilitationRepository,
-            ITeacherHabilitationRepository teacherHabilitationRepository)
-
+            ITeacherHabilitationRepository teacherHabilitationRepository,
+            IClassesRepository classesRepository,
+            IClassroomRepository classroomRepository,
+            IHolidayRepository holidayRepository,
+            IScheduleRepository scheduleRepository,
+            IAttendanceRepository attendanceRepository)
         {
             _context = context;
             _logger = logger;
@@ -47,6 +56,11 @@ namespace Infrastructure.Repository
             TeacherRepository = teacherRepository;
             HabilitationRepository = habilitationRepository;
             TeacherHabilitationRepository = teacherHabilitationRepository;
+            ClassesRepository = classesRepository;
+            ClassroomRepository = classroomRepository;
+            HolidayRepository = holidayRepository;
+            ScheduleRepository = scheduleRepository;
+            AttendanceRepository = attendanceRepository;
         }
 
         public async Task CommitAsync()

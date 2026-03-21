@@ -12,6 +12,11 @@
         public ITeacherRepository TeacherRepository { get; }
         public IHabilitationRepository HabilitationRepository { get; }
         public ITeacherHabilitationRepository TeacherHabilitationRepository { get; }
+        public IClassesRepository ClassesRepository { get; }
+        public IClassroomRepository ClassroomRepository { get; }
+        public IHolidayRepository HolidayRepository { get; }
+        public IScheduleRepository ScheduleRepository { get; }
+        public IAttendanceRepository AttendanceRepository { get; }
         Task CommitAsync();
     }
 }

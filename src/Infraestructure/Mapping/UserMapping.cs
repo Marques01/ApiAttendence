@@ -10,8 +10,8 @@ namespace Infrastructure.Mapping
         {
             builder.ToTable("tb_users");
             builder.HasKey(x => x.UserId);
-            builder.Property(x => x.Login).IsRequired().HasColumnType("varchar(100)");
-            builder.Property(x => x.Name).IsRequired().HasColumnType("varchar(100)");
+            builder.Property(x => x.Login).HasColumnType("varchar(100)");
+            builder.Property(x => x.Name).HasColumnType("varchar(100)");
             builder.Property(x => x.Password).HasColumnType("varchar(225)");
             builder.Property(x => x.Salt).HasColumnType("varchar(225)");
             builder.Property(u => u.CreateAt).HasPrecision(0);

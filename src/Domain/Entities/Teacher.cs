@@ -18,7 +18,11 @@
 
         public DateTime DisabledAt { get; set; }
 
-        // Relacionamento com habilidades
+        // Relacionamentos
         public ICollection<TeacherHabilitation> TeacherHabilitations { get; set; } = new List<TeacherHabilitation>();
+
+        public ICollection<Classes> Classes { get; set; } = new List<Classes>();
+
+        public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
     }
 }
