@@ -17,7 +17,26 @@ namespace Infrastructure.Mapping
             builder.Property(t => t.Enabled).HasDefaultValue(true);
             builder.Property(t => t.CreatedAt);
             builder.Property(t => t.UpdatedAt);
-            builder.Property(t => t.DisabledAt);            
+            builder.Property(t => t.DisabledAt);
+
+            builder.HasIndex(t => t.Registration).IsUnique();
+            builder.HasIndex(t => t.Email).IsUnique();
+
+            // Relacionamentos - sem Cascade para evitar ciclos
+            builder.HasMany(t => t.TeacherHabilitations)
+                .WithOne(th => th.Teacher)
+                .HasForeignKey(th => th.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(t => t.Classes)
+                .WithOne(c => c.Teacher)
+                .HasForeignKey(c => c.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(t => t.Schedules)
+                .WithOne(s => s.Teacher)
+                .HasForeignKey(s => s.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

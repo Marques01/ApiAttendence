@@ -24,15 +24,23 @@ namespace Infrastructure.Mapping
             // Relacionamentos
             builder.HasOne(c => c.Teacher)
                 .WithMany(t => t.Classes)
-                .HasForeignKey(c => c.TeacherId);
+                .HasForeignKey(c => c.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(c => c.Classroom)
                 .WithMany(cr => cr.Classes)
-                .HasForeignKey(c => c.ClassroomId);
+                .HasForeignKey(c => c.ClassroomId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(c => c.Schedules)
                 .WithOne(s => s.Classes)
-                .HasForeignKey(s => s.ClassId);
+                .HasForeignKey(s => s.ClassId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Índices
+            builder.HasIndex(c => c.TeacherId);
+            builder.HasIndex(c => c.ClassroomId);
+            builder.HasIndex(c => new { c.StartDate, c.EndDate });
         }
     }
 }

@@ -23,18 +23,29 @@ namespace Infrastructure.Mapping
             builder.Property(s => s.UpdatedAt);
             builder.Property(s => s.DisabledAt);
 
-            // Relacionamentos
+            // Relacionamentos - sem Cascade para evitar ciclos
             builder.HasOne(s => s.Classes)
                 .WithMany(c => c.Schedules)
-                .HasForeignKey(s => s.ClassId);
+                .HasForeignKey(s => s.ClassId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(s => s.Teacher)
                 .WithMany(t => t.Schedules)
-                .HasForeignKey(s => s.TeacherId);
+                .HasForeignKey(s => s.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(s => s.Attendances)
                 .WithOne(a => a.Schedule)
-                .HasForeignKey(a => a.ScheduleId);
+                .HasForeignKey(a => a.ScheduleId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Índices
+            builder.HasIndex(s => s.ClassId);
+            builder.HasIndex(s => s.TeacherId);
+            builder.HasIndex(s => s.Date);
+            builder.HasIndex(s => s.DayOfWeek);
+            builder.HasIndex(s => s.IsHoliday);
+            builder.HasIndex(s => new { s.ClassId, s.Date }).IsUnique();
         }
     }
 }

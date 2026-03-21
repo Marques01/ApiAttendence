@@ -81,21 +81,23 @@ namespace Application.Services
         /// <summary>
         /// Retorna apenas os agendamentos ATIVOS (não feriados) de uma classe
         /// </summary>
-        public async Task<List<ScheduleResponseModel>> GetSchedulesByClassIdAsync(int classId)
+        public async Task<ScheduleResponseModel> GetSchedulesByClassIdAsync(int classId)
         {
             try
             {
                 var schedules = await _uof.ScheduleRepository.GetSchedulesByClassIdAsync(false, classId);
 
-                return schedules
-                    .Where(s => !s.IsHoliday && s.Enabled) // Apenas aulas ativas
-                    .Select(s => new ScheduleResponseModel()
-                    {
-                        IsSuccess = true,
-                        StatusCode = HttpStatusCode.OK,
-                        Model = s
-                    })
+                var schedulesModel = schedules
+                    .Where(s => !s.IsHoliday && s.Enabled) // Apenas aulas ativas                    
                     .ToList();
+
+                return new ScheduleResponseModel()
+                {
+                    IsSuccess = true,
+                    StatusCode = HttpStatusCode.OK,
+                    Model = schedulesModel,
+                    Message = $"Total de agendamentos ativos para a classe {classId}: {schedulesModel.Count}"
+                };
             }
             catch (Exception)
             {
@@ -106,21 +108,23 @@ namespace Application.Services
         /// <summary>
         /// Retorna apenas os agendamentos ATIVOS de um professor
         /// </summary>
-        public async Task<List<ScheduleResponseModel>> GetSchedulesByTeacherIdAsync(int teacherId)
+        public async Task<ScheduleResponseModel> GetSchedulesByTeacherIdAsync(int teacherId)
         {
             try
             {
                 var schedules = await _uof.ScheduleRepository.GetSchedulesByTeacherIdAsync(false, teacherId);
 
-                return schedules
+                var schedulesModel = schedules
                     .Where(s => !s.IsHoliday && s.Enabled)
-                    .Select(s => new ScheduleResponseModel()
-                    {
-                        IsSuccess = true,
-                        StatusCode = HttpStatusCode.OK,
-                        Model = s
-                    })
                     .ToList();
+
+                return new ScheduleResponseModel()
+                {
+                    IsSuccess = true,
+                    StatusCode = HttpStatusCode.OK,
+                    Model = schedulesModel,
+                    Message = $"Total de agendamentos ativos para o professor {teacherId}: {schedulesModel.Count}"
+                };
             }
             catch (Exception)
             {
@@ -131,21 +135,23 @@ namespace Application.Services
         /// <summary>
         /// Retorna apenas os agendamentos ATIVOS em um período
         /// </summary>
-        public async Task<List<ScheduleResponseModel>> GetSchedulesByDateRangeAsync(DateTime startDate, DateTime endDate)
+        public async Task<ScheduleResponseModel> GetSchedulesByDateRangeAsync(DateTime startDate, DateTime endDate)
         {
             try
             {
                 var schedules = await _uof.ScheduleRepository.GetSchedulesByDateRangeAsync(false, startDate, endDate);
 
-                return schedules
-                    .Where(s => !s.IsHoliday && s.Enabled)
-                    .Select(s => new ScheduleResponseModel()
-                    {
-                        IsSuccess = true,
-                        StatusCode = HttpStatusCode.OK,
-                        Model = s
-                    })
+                var schedulesModel = schedules
+                    .Where(s => !s.IsHoliday && s.Enabled)                    
                     .ToList();
+
+                return new ScheduleResponseModel()
+                {
+                    IsSuccess = true,
+                    StatusCode = HttpStatusCode.OK,
+                    Model = schedulesModel,
+                    Message = $"Total de agendamentos ativos entre {startDate:dd/MM/yyyy} e {endDate:dd/MM/yyyy}: {schedulesModel.Count}"
+                };
             }
             catch (Exception)
             {
@@ -156,21 +162,23 @@ namespace Application.Services
         /// <summary>
         /// Retorna todos os agendamentos de um dia da semana específico (apenas ativos)
         /// </summary>
-        public async Task<List<ScheduleResponseModel>> GetSchedulesByDayOfWeekAsync(DayOfWeek dayOfWeek)
+        public async Task<ScheduleResponseModel> GetSchedulesByDayOfWeekAsync(DayOfWeek dayOfWeek)
         {
             try
             {
                 var schedules = await _uof.ScheduleRepository.GetSchedulesByDateRangeAsync(false, DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1));
 
-                return schedules
+                var schedulesModel = schedules
                     .Where(s => s.DayOfWeek == dayOfWeek && !s.IsHoliday && s.Enabled)
-                    .Select(s => new ScheduleResponseModel()
-                    {
-                        IsSuccess = true,
-                        StatusCode = HttpStatusCode.OK,
-                        Model = s
-                    })
                     .ToList();
+
+                return new ScheduleResponseModel()
+                {
+                    IsSuccess = true,
+                    StatusCode = HttpStatusCode.OK,
+                    Model = schedulesModel,
+                    Message = $"Total de agendamentos ativos para o dia da semana {dayOfWeek}: {schedulesModel.Count}"
+                };
             }
             catch (Exception)
             {
@@ -181,21 +189,23 @@ namespace Application.Services
         /// <summary>
         /// Retorna todos os agendamentos ativos (não feriados e habilitados)
         /// </summary>
-        public async Task<List<ScheduleResponseModel>> GetActiveSchedulesAsync()
+        public async Task<ScheduleResponseModel> GetActiveSchedulesAsync()
         {
             try
             {
                 var schedules = await _uof.ScheduleRepository.GetSchedulesByDateRangeAsync(false, DateTime.Now, DateTime.Now.AddYears(1));
 
-                return schedules
-                    .Where(s => !s.IsHoliday && s.Enabled)
-                    .Select(s => new ScheduleResponseModel()
-                    {
-                        IsSuccess = true,
-                        StatusCode = HttpStatusCode.OK,
-                        Model = s
-                    })
+                var schedulesModel = schedules
+                    .Where(s => !s.IsHoliday && s.Enabled)                   
                     .ToList();
+
+                return new ScheduleResponseModel()
+                {
+                    IsSuccess = true,
+                    StatusCode = HttpStatusCode.OK,
+                    Model = schedulesModel,
+                    Message = $"Total de agendamentos ativos: {schedulesModel.Count}"
+                };
             }
             catch (Exception)
             {
@@ -206,21 +216,23 @@ namespace Application.Services
         /// <summary>
         /// Retorna todos os agendamentos que caem em feriados
         /// </summary>
-        public async Task<List<ScheduleResponseModel>> GetHolidaySchedulesAsync()
+        public async Task<ScheduleResponseModel> GetHolidaySchedulesAsync()
         {
             try
             {
                 var schedules = await _uof.ScheduleRepository.GetSchedulesByDateRangeAsync(false, DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1));
 
-                return schedules
-                    .Where(s => s.IsHoliday)
-                    .Select(s => new ScheduleResponseModel()
-                    {
-                        IsSuccess = true,
-                        StatusCode = HttpStatusCode.OK,
-                        Model = s
-                    })
+                var schedulesModel = schedules
+                    .Where(s => s.IsHoliday)                    
                     .ToList();
+
+                return new ScheduleResponseModel()
+                {
+                    IsSuccess = true,
+                    StatusCode = HttpStatusCode.OK,
+                    Model = schedulesModel,
+                    Message = $"Total de agendamentos em feriados: {schedulesModel.Count}"
+                };
             }
             catch (Exception)
             {

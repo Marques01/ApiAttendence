@@ -22,11 +22,20 @@ namespace Infrastructure.Mapping
             // Relacionamentos
             builder.HasOne(a => a.Schedule)
                 .WithMany(s => s.Attendances)
-                .HasForeignKey(a => a.ScheduleId);
+                .HasForeignKey(a => a.ScheduleId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(a => a.Student)
-                .WithMany() // Se houver relacionamento inverso em Student
-                .HasForeignKey(a => a.StudentId);
+                .WithMany()
+                .HasForeignKey(a => a.StudentId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Índices
+            builder.HasIndex(a => a.ScheduleId);
+            builder.HasIndex(a => a.StudentId);
+            builder.HasIndex(a => a.Date);
+            builder.HasIndex(a => a.Status);
+            builder.HasIndex(a => new { a.ScheduleId, a.StudentId }).IsUnique();
         }
     }
 }

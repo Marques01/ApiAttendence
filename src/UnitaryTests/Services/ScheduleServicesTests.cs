@@ -1,5 +1,6 @@
 using Application.Models.Response;
 using Application.Services.Interfaces;
+using Domain.Entities;
 using Moq;
 using System.Net;
 
@@ -66,38 +67,63 @@ namespace UnitaryTests.Services
         public async Task GetSchedulesByClassIdShouldReturnActiveSchedules()
         {
             // Arrange
-            var expectedResponse = new List<ScheduleResponseModel>
+            var expectedResponse = new ScheduleResponseModel()
             {
-                new()
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Model = new List<Schedule>()
                 {
-                    IsSuccess = true,
-                    StatusCode = HttpStatusCode.OK
+                    new Schedule
+                    {
+                        ScheduleId = 1,
+                        ClassId = 1,
+                        TeacherId = 1,
+                        Date = DateTime.Now,
+                        DayOfWeek = DayOfWeek.Monday,
+                        StartTime = new TimeOnly(8, 0),
+                        EndTime = new TimeOnly(12, 0),
+                        IsHoliday = false,
+                        Enabled = true
+                    },
                 }
             };
 
             _scheduleServicesMock.Setup(x => x.GetSchedulesByClassIdAsync(It.IsAny<int>()))
-                .ReturnsAsync(expectedResponse);
+                    .ReturnsAsync(expectedResponse);
 
             var scheduleService = _scheduleServicesMock.Object;
 
             // Act
             var response = await scheduleService.GetSchedulesByClassIdAsync(1);
+            var responseModel = (IEnumerable<Schedule>?)response.Model is null ? new List<Schedule>() : (IEnumerable<Schedule>)response.Model;
 
             // Assert
-            Assert.NotEmpty(response);
-            Assert.True(response.First().IsSuccess);
+            Assert.NotEmpty(responseModel);
+            Assert.True(response.IsSuccess);
         }
 
         [Fact]
         public async Task GetSchedulesByTeacherIdShouldReturnActiveSchedules()
         {
             // Arrange
-            var expectedResponse = new List<ScheduleResponseModel>
+            var expectedResponse = new ScheduleResponseModel()
             {
-                new()
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Model = new List<Schedule>()
                 {
-                    IsSuccess = true,
-                    StatusCode = HttpStatusCode.OK
+                     new Schedule
+                    {
+                        ScheduleId = 1,
+                        ClassId = 1,
+                        TeacherId = 1,
+                        Date = DateTime.Now,
+                        DayOfWeek = DayOfWeek.Monday,
+                        StartTime = new TimeOnly(8, 0),
+                        EndTime = new TimeOnly(12, 0),
+                        IsHoliday = false,
+                        Enabled = true
+                    },
                 }
             };
 
@@ -108,10 +134,11 @@ namespace UnitaryTests.Services
 
             // Act
             var response = await scheduleService.GetSchedulesByTeacherIdAsync(1);
+            var responseModel = (IEnumerable<Schedule>?)response.Model is null ? new List<Schedule>() : (IEnumerable<Schedule>)response.Model;
 
             // Assert
-            Assert.NotEmpty(response);
-            Assert.True(response.First().IsSuccess);
+            Assert.NotEmpty(responseModel);
+            Assert.True(response.IsSuccess);
         }
 
         [Fact]
@@ -121,12 +148,24 @@ namespace UnitaryTests.Services
             var startDate = DateTime.Now;
             var endDate = DateTime.Now.AddDays(30);
 
-            var expectedResponse = new List<ScheduleResponseModel>
+            var expectedResponse = new ScheduleResponseModel()
             {
-                new()
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Model = new List<Schedule>()
                 {
-                    IsSuccess = true,
-                    StatusCode = HttpStatusCode.OK
+                     new Schedule
+                    {
+                        ScheduleId = 1,
+                        ClassId = 1,
+                        TeacherId = 1,
+                        Date = DateTime.Now,
+                        DayOfWeek = DayOfWeek.Monday,
+                        StartTime = new TimeOnly(8, 0),
+                        EndTime = new TimeOnly(12, 0),
+                        IsHoliday = false,
+                        Enabled = true
+                    },
                 }
             };
 
@@ -137,22 +176,35 @@ namespace UnitaryTests.Services
 
             // Act
             var response = await scheduleService.GetSchedulesByDateRangeAsync(startDate, endDate);
+            var responseModel = (IEnumerable<Schedule>?)response.Model is null ? new List<Schedule>() : (IEnumerable<Schedule>)response.Model;
 
             // Assert
-            Assert.NotEmpty(response);
-            Assert.True(response.First().IsSuccess);
+            Assert.NotEmpty(responseModel);
+            Assert.True(response.IsSuccess);
         }
 
         [Fact]
         public async Task GetSchedulesByDayOfWeekShouldReturnSchedules()
         {
             // Arrange
-            var expectedResponse = new List<ScheduleResponseModel>
+            var expectedResponse = new ScheduleResponseModel()
             {
-                new()
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Model = new List<Schedule>()
                 {
-                    IsSuccess = true,
-                    StatusCode = HttpStatusCode.OK
+                     new Schedule
+                    {
+                        ScheduleId = 1,
+                        ClassId = 1,
+                        TeacherId = 1,
+                        Date = DateTime.Now,
+                        DayOfWeek = DayOfWeek.Monday,
+                        StartTime = new TimeOnly(8, 0),
+                        EndTime = new TimeOnly(12, 0),
+                        IsHoliday = false,
+                        Enabled = true
+                    },
                 }
             };
 
@@ -163,22 +215,35 @@ namespace UnitaryTests.Services
 
             // Act
             var response = await scheduleService.GetSchedulesByDayOfWeekAsync(DayOfWeek.Monday);
+            var responseModel = (IEnumerable<Schedule>?)response.Model is null ? new List<Schedule>() : (IEnumerable<Schedule>)response.Model;
 
             // Assert
-            Assert.NotEmpty(response);
-            Assert.True(response.First().IsSuccess);
+            Assert.NotEmpty(responseModel);
+            Assert.True(response.IsSuccess);
         }
 
         [Fact]
         public async Task GetActiveSchedulesShouldReturnOnlyEnabledSchedules()
         {
-            // Arrange
-            var expectedResponse = new List<ScheduleResponseModel>
+            // Arrange            
+            var expectedResponse = new ScheduleResponseModel()
             {
-                new()
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Model = new List<Schedule>()
                 {
-                    IsSuccess = true,
-                    StatusCode = HttpStatusCode.OK
+                    new Schedule
+                    {
+                        ScheduleId = 1,
+                        ClassId = 1,
+                        TeacherId = 1,
+                        Date = DateTime.Now,
+                        DayOfWeek = DayOfWeek.Monday,
+                        StartTime = new TimeOnly(8, 0),
+                        EndTime = new TimeOnly(12, 0),
+                        IsHoliday = false,
+                        Enabled = true
+                    },
                 }
             };
 
@@ -189,22 +254,35 @@ namespace UnitaryTests.Services
 
             // Act
             var response = await scheduleService.GetActiveSchedulesAsync();
+            var responseModel = (IEnumerable<Schedule>?)response.Model is null ? new List<Schedule>() : (IEnumerable<Schedule>)response.Model;
 
             // Assert
-            Assert.NotEmpty(response);
-            Assert.All(response, r => Assert.True(r.IsSuccess));
+            Assert.NotEmpty(responseModel);
+            Assert.True(response.IsSuccess);
         }
 
         [Fact]
         public async Task GetHolidaySchedulesShouldReturnHolidaySchedules()
         {
             // Arrange
-            var expectedResponse = new List<ScheduleResponseModel>
+            var expectedResponse = new ScheduleResponseModel()
             {
-                new()
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Model = new List<Schedule>()
                 {
-                    IsSuccess = true,
-                    StatusCode = HttpStatusCode.OK
+                    new Schedule
+                    {
+                        ScheduleId = 1,
+                        ClassId = 1,
+                        TeacherId = 1,
+                        Date = DateTime.Now,
+                        DayOfWeek = DayOfWeek.Monday,
+                        StartTime = new TimeOnly(8, 0),
+                        EndTime = new TimeOnly(12, 0),
+                        IsHoliday = false,
+                        Enabled = true
+                    },
                 }
             };
 
@@ -215,10 +293,11 @@ namespace UnitaryTests.Services
 
             // Act
             var response = await scheduleService.GetHolidaySchedulesAsync();
+            var responseModel = (IEnumerable<Schedule>?)response.Model is null ? new List<Schedule>() : (IEnumerable<Schedule>)response.Model;
 
             // Assert
-            Assert.NotEmpty(response);
-            Assert.True(response.First().IsSuccess);
+            Assert.NotEmpty(responseModel);
+            Assert.True(response.IsSuccess);
         }
 
         [Fact]
@@ -257,14 +336,26 @@ namespace UnitaryTests.Services
         public async Task GetSchedulesExcludesHolidaysFromActiveSchedules()
         {
             // Arrange
-            var expectedResponse = new List<ScheduleResponseModel>
+            var expectedResponse = new ScheduleResponseModel()
             {
-                new()
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Model = new List<Schedule>()
                 {
-                    IsSuccess = true,
-                    Message = "Apenas aulas ativas retornadas",
-                    StatusCode = HttpStatusCode.OK
-                }
+                    new Schedule
+                    {
+                        ScheduleId = 1,
+                        ClassId = 1,
+                        TeacherId = 1,
+                        Date = DateTime.Now,
+                        DayOfWeek = DayOfWeek.Monday,
+                        StartTime = new TimeOnly(8, 0),
+                        EndTime = new TimeOnly(12, 0),
+                        IsHoliday = false,
+                        Enabled = true
+                    },
+                },
+                Message = "Apenas aulas ativas"
             };
 
             _scheduleServicesMock.Setup(x => x.GetSchedulesByClassIdAsync(It.IsAny<int>()))
@@ -274,11 +365,12 @@ namespace UnitaryTests.Services
 
             // Act
             var response = await scheduleService.GetSchedulesByClassIdAsync(1);
+            var responseModel = (IEnumerable<Schedule>?)response.Model is null ? new List<Schedule>() : (IEnumerable<Schedule>)response.Model;
 
             // Assert
-            Assert.All(response, r => Assert.True(r.IsSuccess));
-            var firstResultMessage = response.First().Message.ToLower();
-            Assert.Contains("apenas aulas ativas", firstResultMessage);
+            Assert.True(response.IsSuccess);
+            string firstResultMessage = response.Message ?? string.Empty;
+            Assert.Contains("apenas aulas ativas", firstResultMessage, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

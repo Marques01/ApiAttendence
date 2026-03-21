@@ -21,7 +21,11 @@ namespace Infrastructure.Mapping
             // Relacionamento
             builder.HasMany(c => c.Classes)
                 .WithOne(cl => cl.Classroom)
-                .HasForeignKey(cl => cl.ClassroomId);
+                .HasForeignKey(cl => cl.ClassroomId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Índices
+            builder.HasIndex(c => c.Name).IsUnique();
         }
     }
 }

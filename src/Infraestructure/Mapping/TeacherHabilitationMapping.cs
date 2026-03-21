@@ -19,11 +19,13 @@ namespace Infrastructure.Mapping
             // Relacionamentos
             builder.HasOne(th => th.Teacher)
                 .WithMany(t => t.TeacherHabilitations)
-                .HasForeignKey(th => th.TeacherId);
+                .HasForeignKey(th => th.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(th => th.Habilitation)
                 .WithMany(h => h.TeacherHabilitations)
-                .HasForeignKey(th => th.HabilitationId);
+                .HasForeignKey(th => th.HabilitationId)
+                .OnDelete(DeleteBehavior.NoAction);            
         }
     }
 }

@@ -21,7 +21,11 @@ namespace Infrastructure.Mapping
             // Relacionamento com TeacherHabilitation
             builder.HasMany(h => h.TeacherHabilitations)
                 .WithOne(th => th.Habilitation)
-                .HasForeignKey(th => th.HabilitationId);
+                .HasForeignKey(th => th.HabilitationId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Índices
+            builder.HasIndex(h => h.Name).IsUnique();
         }
     }
 }
