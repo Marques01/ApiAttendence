@@ -1,0 +1,19 @@
+services:
+  webapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    container_name: api_attendence
+    environment:
+      ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT:-Production}"
+      ASPNETCORE_URLS: "http://+:9091"
+    ports:
+      - "5913:9091"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
